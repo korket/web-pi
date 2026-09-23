@@ -61,7 +61,7 @@ git log --oneline -10
 git rebase -i main            # squash/cleanup before share
 ```
 
-- Agent AUTO-COMMITS locally after each logical change. No permission needed for local commit.
+- Agent AUTO-COMMITS locally after each important logical change only (done task, green checkpoint, docs/policy change). Not every hunk — batch trivial/WIP in working tree; if a revert would not matter, don't commit yet.
 - Agent NEVER runs `git push` unless user explicitly says `push`. No `--force`, no push on commit.
 - After every auto-commit, agent must ask: `Committed <sha> <subject> — want me to push?` and wait.
 

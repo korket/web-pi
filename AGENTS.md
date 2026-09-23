@@ -32,7 +32,7 @@ gateway/ web/  (scaffold in P0)
 - Body: blank line, WHY not WHAT — problem → solution → impact/side-effects. Wrap 72 cols.
 - Never mix refactor + feature + whitespace. Split it. Squash garbage/oops before push.
 - Bad: `fix stuff`, `WIP`, `update`. Good: `gateway: queue prompt behind active run`.
-- Agent policy: AUTO-COMMIT locally after each logical change (`git add -p` → `diff --check` → `/commit`). NEVER `push` unless user explicitly says "push". After every auto-commit, ask: "Committed <sha> <subject> — want me to push?" and stop.
+- Agent policy: AUTO-COMMIT locally after each important logical change (finished task, working checkpoint, docs/policy change — not every keystroke/hunk). Batch trivial/WIP edits in working tree. NEVER `push` unless user explicitly says "push". After every auto-commit, ask: "Committed <sha> <subject> — want me to push?" and stop.
 
 ## Pi conventions (this repo)
 - Skills: `SKILL.md` with `name` + `description` (what + when). Progressive disclosure — details stay out of context until needed.

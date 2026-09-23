@@ -25,7 +25,7 @@ Node 22+, TypeScript, Vite + React + Tailwind (web), `pi --mode rpc` backend.
 ## Guardrails
 - Localhost only, allowlisted cwd. Confirm destructive bash/file writes.
 - Review unfamiliar `.pi/` content before trust. `export/share` may contain secrets.
-- Git: AUTO-COMMIT locally after each logical change. NEVER push unless user says "push". After commit, ask if they want to push.
+- Git: AUTO-COMMIT locally after each important logical change only (not every edit). NEVER push unless user says "push". After commit, ask if they want to push.
 
 ## References
 See `PLAN.md`, `WORKFLOW.md`, Pi docs `rpc.md` / `rpc-commands.md` / `json.md` / `message-types.md`.
