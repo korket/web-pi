@@ -51,14 +51,18 @@ Tested: pi --mode rpc --no-session smoke + npm run typecheck
 - NAK whitespace-only churn inside functional diffs. NAK drive-by unrelated fixes.
 - Author must defend every line: `git add -p` + read full `git diff --check` before commit.
 
-## 5. Commands
+## 5. Commands + push policy
 ```bash
 git add -p                    # stage hunk-by-hunk
 git diff --check              # no whitespace errors
 git status --short
-git commit                    # uses .gitmessage template
+git commit                    # uses .gitmessage template, AUTO-RUN locally
 git log --oneline -10
 git rebase -i main            # squash/cleanup before share
 ```
+
+- Agent AUTO-COMMITS locally after each logical change. No permission needed for local commit.
+- Agent NEVER runs `git push` unless user explicitly says `push`. No `--force`, no push on commit.
+- After every auto-commit, agent must ask: `Committed <sha> <subject> — want me to push?` and wait.
 
 Template active via: `git config commit.template .gitmessage`
