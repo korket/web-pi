@@ -11,6 +11,9 @@ Codex-like web/desktop UI for Pi, backed by `pi --mode rpc`.
 - `.pi/prompts/plan.md`, `.pi/prompts/review.md` — `/plan`, `/review`
 
 ## Quickstart
+Double-click `start-web-pi.bat` (first run installs deps, then boots gateway + web and opens the browser with the token pre-filled). Ctrl+C in each window to stop.
+
+Or manually:
 ```bash
 cd "C:\Users\Mikansei\Documents\Web-Pi"
 npm install
