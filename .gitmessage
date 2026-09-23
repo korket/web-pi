@@ -1,0 +1,13 @@
+# area: imperative short description (<=50, no period)
+
+# WHY not WHAT: problem, why this approach, risks/side-effects. Wrap 72.
+# Remember: atomic, builds, bisectable. Split refactor vs feature vs whitespace.
+#
+# Example:
+# gateway: queue prompt behind active run
+#
+# Prompt arriving mid-run raced waitForIdle and dropped fast
+# completions. Subscribe before prompt, route via steer/followUp
+# so agent_settled stays authoritative.
+#
+# Tested: pi --mode rpc --no-session smoke + npm run typecheck
