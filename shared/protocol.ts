@@ -51,7 +51,7 @@ export type ClientRequestBody<T = ClientRequest> = T extends unknown ? Omit<T, "
 
 /** Gateway -> client. `event` frames carry live Pi session events. */
 export type ServerMessage =
-	| { type: "hello"; piVersion: string; tokenRequired: true }
+	| { type: "hello"; piVersion: string; tokenRequired: true; allowRoots: string[] }
 	| { type: "response"; id: string; ok: true; data?: unknown }
 	| { type: "response"; id: string; ok: false; error: string }
 	| { type: "event"; event: SessionEvent };

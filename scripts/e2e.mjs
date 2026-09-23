@@ -57,8 +57,11 @@ async function run() {
 
 	ws.on("open", async () => {
 		try {
-			const created = await rpc({ type: "create", cwd: REPO_ROOT, name: "e2e" });
-			if (!created || created.name !== "e2e") throw new Error(`bad create: ${JSON.stringify(created)}`);
+			const created = await rpc({ type: "create", name: "e2e" });
+			// No cwd sent: gateway must default to the first allowlisted root.
+			if (!created || created.name !== "e2e" || !created.cwd) {
+				throw new Error(`bad create: ${JSON.stringify(created)}`);
+			}
 
 			const snapshot = await rpc({ type: "resync" });
 			if (!snapshot.state || !Array.isArray(snapshot.messages) || !snapshot.entries) {

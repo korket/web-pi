@@ -31,7 +31,9 @@ export class PiManager {
 
 	async create(input: { cwd?: string; name?: string }): Promise<{ cwd: string; name: string }> {
 		if (this.#client) throw new Error("P0 supports one session; one is already running");
-		const cwd = validateCwd(input.cwd, this.#options.allowRoots);
+		// Empty/absent cwd means "operate in the first allowlisted root".
+		const requested = input.cwd?.trim() || this.#options.allowRoots[0];
+		const cwd = validateCwd(requested, this.#options.allowRoots);
 		const name = validateName(input.name ?? "web-pi");
 		const client = new RpcClient({
 			cliPath: this.#options.cliPath,

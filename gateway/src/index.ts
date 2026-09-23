@@ -79,7 +79,7 @@ server.on("upgrade", (request, socket, head) => {
 	wss.handleUpgrade(request, socket, head, (client) => {
 		clients.add(client);
 		client.on("close", () => clients.delete(client));
-		client.send(JSON.stringify({ type: "hello", piVersion: VERSION, tokenRequired: true }));
+		client.send(JSON.stringify({ type: "hello", piVersion: VERSION, tokenRequired: true, allowRoots: ALLOW_ROOTS }));
 		attachClient(client, pi, trace);
 	});
 });
