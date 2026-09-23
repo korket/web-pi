@@ -16,7 +16,16 @@ function toItems(messages: HistoryMessage[]): TranscriptItem[] {
 }
 
 export function App() {
-	const [token, setToken] = useState(() => localStorage.getItem("webpi-token") ?? "");
+	const [token, setToken] = useState(() => {
+		// Launcher opens the app as /?token=... — prefill, persist, and strip it.
+		const fromUrl = new URLSearchParams(window.location.search).get("token");
+		if (fromUrl) {
+			localStorage.setItem("webpi-token", fromUrl);
+			history.replaceState(null, "", window.location.pathname);
+			return fromUrl;
+		}
+		return localStorage.getItem("webpi-token") ?? "";
+	});
 	const [cwd, setCwd] = useState("");
 	const [name, setName] = useState("web-pi");
 	const [connected, setConnected] = useState(false);
