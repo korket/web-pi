@@ -47,14 +47,20 @@ Pi docs: `~/.pi/agent/install/releases/.../docs/{rpc.md,rpc-commands.md,json.md,
 P0 web = Vite + minimal React, no Tailwind-weight, NO xterm.js, NO Monaco. Two views + one lib:
 
 ```
-web/
-  components/Composer.tsx      # multiline, Enter send, abort button
-  components/Transcript.tsx    # user bubbles, assistant markdown-pre, tool start/end rows
-  lib/reconstruct.ts           # contentIndex delta buffer -> partial, replaced by message_end
-  lib/reconstruct.test.ts      # fixtures from json.md shapes (text_delta, toolCallId, message_end)
-gateway/
-  pi-manager.ts  # spawn x1, cwd validation, version check, shutdown, trace writer
-  ws.ts          # token auth, cursor resync, event relay (wraps RpcClient)
+web/src/
+  components/Composer.tsx  components/Transcript.tsx
+  lib/reconstruct.ts  lib/reconstruct.test.ts
+shared/
+  protocol.ts              # WS wire types, P0 request allowlist
+gateway/src/
+  index.ts     # boot: version pin, token, 127.0.0.1 server, upgrade gate
+  pi-manager.ts  # spawn x1 via RpcClient, allowlist methods, shutdown
+  ws.ts        # request routing (the allowlist switch), event relay
+  validate.ts  # cwd allowlist: traversal + symlink escape rejection
+  validate.test.ts
+  trace.ts     # JSONL trace writer, 10MB rotation
+scripts/
+  smoke.mjs    # pi --mode rpc get_state round-trip
 ```
 
 - Render `text_delta/thinking_delta` live keyed by `contentIndex`, replace with `text_end` then `message_end.message`. Tool rows keyed by `toolCallId` (plain rows in P0, cards in P1).
