@@ -10,6 +10,7 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "smoke": "node scripts/smoke.mjs",
+    "e2e": "node scripts/e2e.mjs",
     "dev:gateway": "npm run dev --workspace gateway",
     "dev:web": "npm run dev --workspace web"
   }
