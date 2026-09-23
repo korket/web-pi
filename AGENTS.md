@@ -38,7 +38,9 @@ gateway/ web/  (scaffold in P0)
 - Skills: `SKILL.md` with `name` + `description` (what + when). Progressive disclosure — details stay out of context until needed.
 - Prompts: `/plan`, `/review` from `.pi/prompts/*.md`. Args via `$1`, `$@`, `${1:-default}`.
 - Sessions: persistent JSONL, tree + branches. Use `get_entries{since}` cursor, `get_tree` for branches, `fork/clone` for alternatives. Compact, don't delete.
-- Security: Pi tools run as Pi process, no sandbox by default. Localhost only, allowlisted `cwd`. Review `export/share` output (may contain secrets).
+- Security: Pi tools run as Pi process, no sandbox by default. Localhost only, allowlisted `cwd`, `network_access=false` default. Destructive bash/writes/network/MCP = explicit UI approval. Review `export/share` output (may contain secrets).
+- Trust: trusted project `.pi/` overrides agent-dir except secrets; `sessionDir` reads pre-trust. Review unfamiliar `.pi/` before trusting.
+- Trace: gateway appends every RPC record to `.pi-sessions/trace.jsonl`. `/review` findings cite `path:line`.
 
 ## When you correct Pi, update this file
 Repeated mistake → add rule. Wrong files read → add routing. Same review feedback twice → codify it.

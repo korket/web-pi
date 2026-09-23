@@ -63,13 +63,16 @@ gateway/
   ws.ts          # session.subscribe -> socket
 ```
 
-## 4. Security
+## 4. Security (sandbox + approvals, Codex model)
 
 Pi tools run as Pi process, no sandbox by default (see security.md).
+Gateway must enforce both layers:
 
-- v1: localhost only, allowlisted `cwd` root (e.g. `~/projects`), auth token, no arbitrary path.
+- Sandbox (CAN): localhost only, allowlisted `cwd` root (e.g. `~/projects`), no arbitrary path, auth token. `network_access=false` default — enable per-domain explicitly, never globally for agent phase.
+- Approvals (ASK): destructive `bash` / file writes / outside-workspace edits / network / MCP tools with side effects = explicit UI approval. Read-only chat/plan needs no approval. Destructive always pauses for human, even if sandbox would allow it.
 - Review `export/share` (contains secrets/file contents) before rendering.
-- Remote/multi-user: one container per workspace (containerization.md), limits, kill on disconnect.
+- Remote/multi-user: one container per workspace (containerization.md), secrets setup-phase only, kill on disconnect.
+- Non-goals P0-P1: no MCP, no subagents. Memories = AGENTS.md update loop only.
 
 ## 5. Phases
 

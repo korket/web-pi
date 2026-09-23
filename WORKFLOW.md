@@ -52,10 +52,11 @@ Two layers: **sandbox** (what it CAN touch) + **approvals** (when it must ASK).
 
 ## 7. Reliability loop (trace → eval → fix)
 From OpenAI improvement-loop + memory cookbook:
-1. Human reviews memo/diff (memo is source of truth, cite evidence, preserve uncertainty).
-2. Turn feedback into repeatable check (`/review` prompt or eval script).
+1. Human reviews memo/diff (memo is source of truth, cite evidence as `path:line`, preserve uncertainty — don't flatten to false confidence).
+2. Turn feedback into repeatable check (`/review` prompt or eval script). Focused evals per goal, not one giant score.
 3. Fix `AGENTS.md`/skill/prompt, re-run.
 4. Memory: current run uses compaction; future runs reuse lessons via updated skill/AGENTS.md — don't replay full history.
+5. Trace everything: gateway appends every RPC record (commands, responses, events) to `.pi-sessions/trace.jsonl`. No trace = no debug. Review trace when a run misbehaves before changing prompts.
 
 ## 8. Dev loop for this repo
 ```
