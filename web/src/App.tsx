@@ -26,7 +26,8 @@ export function App() {
 		}
 		return localStorage.getItem("webpi-token") ?? "";
 	});
-	const [cwd, setCwd] = useState("");
+	const [cwd, setCwd] = useState(() => localStorage.getItem("webpi-cwd") ?? "");
+	const [allowRoots, setAllowRoots] = useState<string[]>([]);
 	const [name, setName] = useState("web-pi");
 	const [connected, setConnected] = useState(false);
 	const [hasSession, setHasSession] = useState(false);
@@ -109,6 +110,7 @@ export function App() {
 		socket.onerror = () => setError("gateway unreachable");
 		socket.onmessage = (event) => {
 			const message = JSON.parse(event.data) as ServerMessage;
+			if (message.type === "hello") setAllowRoots(message.allowRoots);
 			if (message.type === "event") applyEvent(message.event);
 		};
 	}, [token, request, applyEvent]);
@@ -120,6 +122,7 @@ export function App() {
 	const createSession = useCallback(async () => {
 		try {
 			await request({ type: "create", cwd, name });
+			localStorage.setItem("webpi-cwd", cwd);
 			setHasSession(true);
 			setError("");
 		} catch (err) {
@@ -163,7 +166,17 @@ export function App() {
 				<button onClick={() => connect()} disabled={!token}>
 					{connected ? "Reconnect" : "Connect"}
 				</button>
-				<input placeholder="absolute cwd" value={cwd} onChange={(event) => setCwd(event.target.value)} />
+				<input
+					placeholder={`cwd (default: ${allowRoots[0] ?? "gateway allow root"})`}
+					list="allow-roots"
+					value={cwd}
+					onChange={(event) => setCwd(event.target.value)}
+				/>
+				<datalist id="allow-roots">
+					{allowRoots.map((root) => (
+						<option key={root} value={root} />
+					))}
+				</datalist>
 				<input placeholder="name" value={name} onChange={(event) => setName(event.target.value)} />
 				<button onClick={() => void createSession()} disabled={!connected || hasSession}>
 					New session
