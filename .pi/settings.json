@@ -1,0 +1,8 @@
+{
+  "$schema": "https://pi.dev/schema/settings.json",
+  "sessionDir": ".pi-sessions",
+  "resources": {
+    "skills": [".pi/skills"],
+    "prompts": [".pi/prompts"]
+  }
+}
